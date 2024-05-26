@@ -4,19 +4,26 @@ const Schema = mongoose.Schema;
 const listingSchema = new Schema({
     title: {
         type: String,
-        required : true,
+        required: true,
     },
-    description: String,
+    description: {
+        type: String,
+        set : (v) => v === "" ? "Description Not Provided" : v,
+    },
     image: {
         type: String,
-        default : "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ,
-        set:(v) => 
-            v === "" 
-        ? "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" : v,
+        set : (v) => v === "" ? "https://images.unsplash.com/photo-1436259335948-d404e293e2b8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" : v,
+
     },
     price: Number,
-    location: String,
-    country: String,
+    location: {
+        type: String,
+        set : (v) => v === "" ? "Location Not Provided" : v,
+    },
+    country: {
+        type: String,
+        set : (v) => v === "" ? "Country Not Provided" : v,
+    },
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
