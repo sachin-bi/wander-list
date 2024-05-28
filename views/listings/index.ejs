@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wanderLust</title>
-</head>
+
+<% layout("/layouts/boilerplate")-%>
+
 <body>
     <h3>All Listings</h3>
-    <form action="/listings/new" method="get">
+    <!-- <form action="/listings/new" method="get">
         <button>Create New Listing</button>
-    </form>
+    </form> -->
     <ul>TITLES:
-        <% for (const listing of allListing) { %>
+        <% for (let listing of allListing) { %>
+            <li>
+                <a href="listings/<%=listing.id%>">
+                
+                    <%= listing.title %>
+                </a>
+            </li>
+            <li>
+                <a href="listings/<%=listing.id%>">
+                
+                    <%= listing.title %>
+                </a>
+            </li>
             <li>
                 <a href="listings/<%=listing.id%>">
                 
@@ -22,4 +30,3 @@
     </ul>
     
 </body>
-</html>

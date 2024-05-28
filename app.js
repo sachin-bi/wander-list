@@ -2,9 +2,11 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
-const ejs = require('ejs');
+// const ejs = require('ejs');
 const path = require('path');
 const methodOverride = require('method-override');
+const ejsMate = require("ejs-mate");
+
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -23,13 +25,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname,"/public")));
 
 
 
 //New Route
 app.get("/listings/new", (req, res) => {
     console.log("new ejs render");
-    // res.send("new route here");
     res.render("listings/new.ejs");
 });
 
@@ -53,14 +56,14 @@ app.get("/listings", async (req, res) => {
 
 //POST Route
 app.post("/listings", async (req, res) => {
-    let newListing = new Listing(req.body.listing) ;
+    let newListing = new Listing(req.body.listing);
     await newListing.save()
-    .then((result)=>{
-        console.log("RESULT from post route---",result);
-    })
-    .catch((err)=>{
-        console.log("ERROR from post route---",err);
-    });
+        .then((result) => {
+            console.log("RESULT from post route---", result);
+        })
+        .catch((err) => {
+            console.log("ERROR from post route---", err);
+        });
     res.redirect("/listings");
 });
 
@@ -69,21 +72,20 @@ app.get("/listings/:id/edit", async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/edit.ejs", { listing });
-    
+
 });
 
 //Update route
-app.put("/listings/:id",async (req, res) => {
+app.put("/listings/:id", async (req, res) => {
     let { id } = req.params;
-
-    await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect("/listings");
 
 });
 
 
 //DELETE route
-app.delete("/listings/:id",async (req, res) => {
+app.delete("/listings/:id", async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
