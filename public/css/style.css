@@ -1,6 +1,13 @@
-/* body{
-    background-color: #b261c7;
-} */
+body {
+    /* // <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 200 to 800 */
+
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+}
 
 .navbar {
     height: 5rem;
@@ -8,7 +15,7 @@
 }
 
 .fa-bolt {
-    color: blueviolet;
+    color: #FF5A5F;
     font-size: 2rem;
     /* size: 4.5rem; */
 }
@@ -31,9 +38,9 @@
     justify-content: center;
 }
 
-.f-info-socials i{
+.f-info-socials i {
     font-size: 1.2rem;
-    margin-left: 0.7rem;
+    margin-left: 0.5rem;
 }
 
 .f-info-links a:hover {
@@ -48,4 +55,38 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: space-evenly;
+}
+
+/* cards */
+.card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p,
+a {
+    font-weight: 400;
+    text-decoration: none !important;
+    color: black !important;
+}
+
+
+/* card Effect -- overlay Effect */
+.card-img-overlay {
+    opacity: 0 ;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2 ;
+    background-color: white;
 }
