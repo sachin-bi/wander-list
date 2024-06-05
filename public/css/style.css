@@ -109,3 +109,22 @@ a {
     border: none !important;
     background-color: #FF5A5F !important;
 }
+
+/* show page - img */
+.show-img{
+    height: 30vh;
+}
+
+.delete-btn{
+    border: none !important;
+    background-color: #FF5A5F !important;
+}
+
+.show-edit-btn{
+    text-decoration: none;
+    color: aliceblue !important;
+}
+
+.edit-delete-box{
+    display: flex;
+}
