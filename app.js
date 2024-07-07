@@ -8,7 +8,8 @@ const methodOverride = require('method-override');
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js"); //err handling fn
 const ExpressError = require("./utils/ExpressError.js");
-const { render } = require('ejs');
+// const { render } = require('ejs');
+const { listingSchema } = require('./schema.js');
 
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
@@ -56,12 +57,18 @@ app.get("/listings", wrapAsync(async (req, res, next) => {
     res.render("listings/index.ejs", { allListing });
 }));
 
+//validate listing
+const validateListing = (req, res, next) => {
+    let { error } = listingSchema.validate(req.body);
+    if (error) {
+        throw new ExpressError(400, error);
+    } else {
+        next();
+    }
+};
 
 //POST Route
-app.post("/listings", wrapAsync(async (req, res, next) => {
-    if (!req.body.listing) {
-        throw new ExpressError(400, "Send valid data for listing!");
-    }
+app.post("/listings", validateListing, wrapAsync(async (req, res, next) => {
     let newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -77,10 +84,10 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res, next) => {
 }));
 
 //Update route
-app.put("/listings/:id", wrapAsync(async (req, res, next) => {
-    if (!req.body.listing) {
-        throw new ExpressError(400, "Send valid data for listing!");
-    }
+app.put("/listings/:id", validateListing, wrapAsync(async (req, res, next) => {
+    // if (!req.body.listing) {
+    //     throw new ExpressError(400, "Send valid data for listing!");
+    // }
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect("/listings");
@@ -123,9 +130,10 @@ app.all('*', (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    console.log("Something went wrong!-----------------");
-
+    
     let { statusCode = 500, message = "Something went wrong!------" } = err;
+    console.log("Something went wrong!-----------------", message);
+    // console.log(err.stack);
     // res.status(statusCode).send(message);
     res.render("error.ejs", { statusCode, message });
 });
