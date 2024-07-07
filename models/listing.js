@@ -8,7 +8,7 @@ const listingSchema = new Schema({
     },
     description: {
         type: String,
-        set : (v) => v === "" ? "Description Not Provided" : v,
+        // set : (v) => v === "" ? "Description Not Provided" : v,
     },
     image: {
         type: String,
@@ -18,11 +18,11 @@ const listingSchema = new Schema({
     price: Number,
     location: {
         type: String,
-        set : (v) => v === "" ? "Location Not Provided" : v,
+        // set : (v) => v === "" ? "Location Not Provided" : v,
     },
     country: {
         type: String,
-        set : (v) => v === "" ? "Country Not Provided" : v,
+        // set : (v) => v === "" ? "Country Not Provided" : v,
     },
 });
 
